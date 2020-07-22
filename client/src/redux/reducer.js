@@ -1,5 +1,6 @@
 const initialState = {
-  cards: []
+  cards: [],
+  username: null
 }
 
 export default function reducer(state = initialState, action) {
@@ -8,6 +9,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         cards: action.cards
+      }
+
+    case 'CLEAR_CARDS':
+      return {
+        ...state,
+        cards: []
       }
 
     case 'ADD_CARD':
@@ -30,22 +37,18 @@ export default function reducer(state = initialState, action) {
         cards: state.cards.filter((card) => card._id !== action._id)
       }
 
-    case 'ENABLE_ALL_CARDS':
+    case 'LOGIN_USER':
+    case 'REGISTER_USER':
+    case 'GET_USER':
       return {
         ...state,
-        cards: state.cards.map((card) => ({ ...card, enabled: true }))
+        username: action.username
       }
 
-    case 'DISABLE_ALL_CARDS':
+    case 'LOGOUT_USER':
       return {
         ...state,
-        cards: state.cards.map((card) => ({ ...card, enabled: false }))
-      }
-
-    case 'SWAP_ALL_FIELDS':
-      return {
-        ...state,
-        cards: state.cards.map((card) => ({ ...card, front: card.back, back: card.front }))
+        username: null
       }
 
     default:
